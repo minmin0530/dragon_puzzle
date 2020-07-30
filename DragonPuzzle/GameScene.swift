@@ -43,7 +43,15 @@ class GameScene: SKScene {
     var sceneWidthCenter : CGFloat = 300.0
     
     var pointLabel : SKLabelNode = SKLabelNode(text: "point")
-    var point : Int = 0
+    var point : Int64 = 0
+    var timeLabel : SKLabelNode = SKLabelNode(text: "time")
+    var time : Int64 = 0
+    var specialShape : SKTexture?
+    var specialNumber: SKTexture?
+    var specialColor : UIColor?
+    var specialSpriteShape : SKSpriteNode?
+    var specialSpriteNumber : SKSpriteNode?
+    var specialSize : Int = 0
     
     var points = [CGPoint(x:0.0, y:0.0),CGPoint(x: 1.0, y:0.0)]
     var line : SKShapeNode?
@@ -57,14 +65,16 @@ class GameScene: SKScene {
     }
     func getNumber(num: Int) -> SKTexture {
         
-        if      num == 0 { return SKTexture(imageNamed: "1") }
+        if      num == -1 { return SKTexture(imageNamed: "0") }
+        else if num == 0 { return SKTexture(imageNamed: "1") }
         else if num == 1 { return SKTexture(imageNamed: "2") }
         else if num == 2 { return SKTexture(imageNamed: "3") }
         else if num == 3 { return SKTexture(imageNamed: "4") }
         else             { return SKTexture(imageNamed: "5") }
     }
     func getShape(num: Int) -> SKTexture {
-        if      num == 0 { return SKTexture(imageNamed: "circle") }
+        if      num == -1 { return SKTexture(imageNamed: "nil") }
+        else if num == 0 { return SKTexture(imageNamed: "circle") }
         else if num == 1 { return SKTexture(imageNamed: "heart") }
         else if num == 2 { return SKTexture(imageNamed: "quad") }
         else if num == 3 { return SKTexture(imageNamed: "star") }
@@ -106,6 +116,41 @@ class GameScene: SKScene {
         e.delete = false
         e.select = false
     }
+    
+    func addPoint(p: Int) {
+        if p == 1 {
+            point += 1
+        } else if p == 2 {
+            point += 10
+        } else if p == 3 {
+            point += 100
+        } else if p == 4 {
+            point += 1000
+        } else if p == 5 {
+            point += 10000
+        } else if p == 6 {
+            point += 100000
+        } else if p == 7 {
+            point += 1000000
+        } else if p == 8 {
+            point += 10000000
+        } else if p == 9 {
+            point += 100000000
+        } else if p == 10 {
+            point += 1000000000
+        } else if p == 11 {
+            point += 10000000000
+        } else if p == 12 {
+            point += 100000000000
+        } else if p == 13 {
+            point += 1000000000000
+        } else if p == 14{
+            point += 10000000000000
+        } else {
+            point += 99999999999999
+        }
+    }
+    
     var player: AVAudioPlayer?
     var select: AVAudioPlayer?
     let selectSoundURL = Bundle.main.url(forResource:"select", withExtension: "mp3")
@@ -162,9 +207,30 @@ class GameScene: SKScene {
         }
         }
         
-        pointLabel.position.x = CGFloat(CGFloat(-2) * 150.0 * elementScale + sceneWidthCenter)
+        pointLabel.position.x = CGFloat(CGFloat(0) * 150.0 * elementScale + sceneWidthCenter)
         pointLabel.position.y = CGFloat(CGFloat(-4) * 150.0 * elementScale + sceneHeightCenter)
         addChild(pointLabel)
+        timeLabel.position.x = CGFloat(CGFloat(0) * 150.0 * elementScale + sceneWidthCenter)
+        timeLabel.position.y = CGFloat(CGFloat(-4.5) * 150.0 * elementScale + sceneHeightCenter)
+        addChild(timeLabel)
+        
+        specialSpriteShape = SKSpriteNode(texture: getShape(num: -1))
+        specialSpriteShape?.position.x = CGFloat(CGFloat(0) * 150.0 * elementScale + sceneWidthCenter)
+        specialSpriteShape?.position.y = CGFloat(CGFloat(-5) * 150.0 * elementScale + sceneHeightCenter)
+        specialSpriteShape?.zPosition = 1
+        specialSpriteShape?.xScale = elementScale
+        specialSpriteShape?.yScale = elementScale
+        addChild(specialSpriteShape!)
+        
+        specialSpriteNumber = SKSpriteNode(texture: getNumber(num: -1))
+        specialSpriteNumber?.position.x = CGFloat(CGFloat(0) * 150.0 * elementScale + sceneWidthCenter)
+        specialSpriteNumber?.position.y = CGFloat(CGFloat(-5) * 150.0 * elementScale + sceneHeightCenter)
+        specialSpriteNumber?.zPosition = 2
+        specialSpriteNumber?.xScale = elementScale
+        specialSpriteNumber?.yScale = elementScale
+        specialSpriteNumber?.colorBlendFactor = 0.0
+        specialSpriteNumber?.color = UIColor.black
+        addChild(specialSpriteNumber!)
 
         dragonLeft.xScale = elementScale * 0.4
         dragonLeft.yScale = elementScale * 0.4
@@ -228,6 +294,89 @@ class GameScene: SKScene {
     }
     
     func touchUp(atPoint pos : CGPoint) {
+        var c: Int = -1
+        var s: Int = -1
+        var n: Int = -1
+        var count1c: Int = 0
+        var count1s: Int = 0
+        var count1n: Int = 0
+        for e in elements {
+            if e.select {
+                if c != -1 {
+                    if c == e.colorNumber {
+                        count1c += 1
+                    } else {
+                        count1c = -1
+                        break
+                    }
+                }
+                c = e.colorNumber!
+                
+                if s != -1 {
+                    if s == e.shapeNumber {
+                        count1s += 1
+                    } else {
+                        count1s = -1
+                        break
+                    }
+                }
+                s = e.shapeNumber!
+
+                if n != -1 {
+                    if n == e.numberNumber {
+                        count1n += 1
+                    } else {
+                        count1n = -1
+                        break
+                    }
+                }
+                n = e.numberNumber!
+            }
+        }
+
+        if count1c > 0 {
+            if count1c == count1s &&
+                count1c == count1n {
+                if count1c >= specialSize {
+
+                    specialColor  = getColor(num: c)
+                    specialShape  = getShape(num: s)
+                    specialNumber = getNumber(num: n)
+                    specialSpriteShape?.texture = specialShape
+                    specialSpriteNumber?.texture = specialNumber
+                    specialSpriteShape?.colorBlendFactor = 1.0
+                    specialSpriteShape?.color = specialColor!
+                    specialSpriteNumber?.colorBlendFactor = 1.0
+                    specialSpriteNumber?.color = UIColor.black
+
+                    specialSize = count1c
+                    if count1c == 1 {
+                        specialSpriteShape?.xScale = elementScale * 0.5
+                        specialSpriteShape?.yScale = elementScale * 0.5
+                        specialSpriteNumber?.xScale = elementScale * 0.5
+                        specialSpriteNumber?.yScale = elementScale * 0.5
+                    } else if count1c == 2 {
+                        specialSpriteShape?.xScale = elementScale
+                        specialSpriteShape?.yScale = elementScale
+                        specialSpriteNumber?.xScale = elementScale
+                        specialSpriteNumber?.yScale = elementScale
+                    } else if count1c == 3 {
+                        specialSpriteShape?.xScale = elementScale * 2.0
+                        specialSpriteShape?.yScale = elementScale * 2.0
+                        specialSpriteNumber?.xScale = elementScale * 2.0
+                        specialSpriteNumber?.yScale = elementScale * 2.0
+                    } else {
+                        specialSpriteShape?.xScale = elementScale * 3.0
+                        specialSpriteShape?.yScale = elementScale * 3.0
+                        specialSpriteNumber?.xScale = elementScale * 3.0
+                        specialSpriteNumber?.yScale = elementScale * 3.0
+                    }
+                }
+            }
+        }
+        
+        
+        
         var i: Int = -1
         var count1: Int = 0
         for e in elements {
@@ -264,7 +413,7 @@ class GameScene: SKScene {
             }
         }
         if count1 > 0 {
-            point += count1
+            addPoint(p: count1)
         }
 ///////////////////////////////////////////
         i = -1
@@ -303,7 +452,7 @@ class GameScene: SKScene {
             }
         }
         if count2 > 0 {
-            point += count2
+            addPoint(p: count2)
         }
 //////////////////////////////////////////
         i = -1
@@ -342,7 +491,7 @@ class GameScene: SKScene {
             }
         }
         if count3 > 0 {
-            point += count3
+            addPoint(p: count3)
         }
 //////////////////////////////////////////
 
@@ -376,8 +525,15 @@ class GameScene: SKScene {
     }
     
     
+    var frameTime: Int = 0
     override func update(_ currentTime: TimeInterval) {
-        
+        frameTime += 1
+        if frameTime >= 100 {
+            frameTime = 0
+            time += 1
+        }
+        timeLabel.text = "time:" + time.description
+
         for e in elements {
             if e.number!.position.y > (sceneHeightCenter - 450.0 * elementScale) {
                 var fallFlag = true
