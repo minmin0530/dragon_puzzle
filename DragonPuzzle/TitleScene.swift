@@ -25,8 +25,8 @@ class TitleScene : SKScene {
         let dragon : SKSpriteNode = SKSpriteNode(imageNamed: "dragonTitle")
         dragon.position.y = view.frame.height / 2
         dragon.position.x = view.frame.width / 2
-        dragon.xScale = 0.4
-        dragon.yScale = 0.4
+        dragon.xScale = 0.4 * 0.606
+        dragon.yScale = 0.4 * 0.606
         addChild(dragon)
         
         
@@ -52,7 +52,7 @@ class TitleScene : SKScene {
         if let touch = touches.first as UITouch? {
             let location = touch.location(in:self)
             if self.atPoint(location).name == "startButton" {
-                let scene = GameScene(size: self.scene!.size)
+                let scene = MenuScene(size: self.scene!.size)
                 scene.scaleMode = .aspectFill
                 self.view!.presentScene(scene)
             }

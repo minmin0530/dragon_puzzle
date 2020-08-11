@@ -42,6 +42,8 @@ class GameScene: SKScene {
     var sceneHeightCenter : CGFloat = 300.0
     var sceneWidthCenter : CGFloat = 300.0
     
+    var gameFinish: SKSpriteNode = SKSpriteNode(imageNamed: "gamefinish")
+    
     var pointLabel : SKLabelNode = SKLabelNode(text: "point")
     var point : Int64 = 0
     var timeLabel : SKLabelNode = SKLabelNode(text: "time")
@@ -56,6 +58,10 @@ class GameScene: SKScene {
     var points = [CGPoint(x:0.0, y:0.0),CGPoint(x: 1.0, y:0.0)]
     var line : SKShapeNode?
 
+    var mode : Mode?
+    func setMode(m : Mode) {
+        mode = m
+    }
     func getColor(num: Int) -> UIColor {
         if      num == 0 { return UIColor.red }
         else if num == 1 { return UIColor.green }
@@ -232,10 +238,10 @@ class GameScene: SKScene {
         specialSpriteNumber?.color = UIColor.black
         addChild(specialSpriteNumber!)
 
-        dragonLeft.xScale = elementScale * 0.4
-        dragonLeft.yScale = elementScale * 0.4
-        dragonRight.xScale = elementScale * 0.4
-        dragonRight.yScale = elementScale * 0.4
+        dragonLeft.xScale = elementScale * 0.4 * 0.606
+        dragonLeft.yScale = elementScale * 0.4 * 0.606
+        dragonRight.xScale = elementScale * 0.4 * 0.606
+        dragonRight.yScale = elementScale * 0.4 * 0.606
         dragonLeft.position.x = view.frame.size.width / 100 * 68
         dragonRight.position.x = view.frame.size.width / 100 * 32
         dragonLeft.position.y =  view.frame.size.height / 100 * 77
@@ -244,6 +250,16 @@ class GameScene: SKScene {
         dragonRight.zPosition = 4
         addChild(dragonLeft)
         addChild(dragonRight)
+        
+        
+        gameFinish.position.y = view.frame.height / 2
+        gameFinish.position.x = view.frame.width / 2
+        gameFinish.xScale = 0.4
+        gameFinish.yScale = 0.4
+        gameFinish.zPosition = 5
+        gameFinish.isHidden = true
+        addChild(gameFinish)
+
     }
     
     
@@ -527,6 +543,25 @@ class GameScene: SKScene {
     
     var frameTime: Int = 0
     override func update(_ currentTime: TimeInterval) {
+        if mode == Mode.free {
+            backgroundColor = UIColor.red
+        }
+        if mode == Mode.timeAttack {
+            backgroundColor = UIColor.blue
+            
+            if time > 10 {
+                gameFinish.isHidden = false
+            }
+            if time > 11 {
+                let scene = ResultScene(size: self.scene!.size)
+                scene.scaleMode = .aspectFill
+                self.view!.presentScene(scene)
+
+            }
+        }
+        if mode == Mode.collectBadge {
+            backgroundColor = UIColor.green
+        }
         frameTime += 1
         if frameTime >= 100 {
             frameTime = 0
