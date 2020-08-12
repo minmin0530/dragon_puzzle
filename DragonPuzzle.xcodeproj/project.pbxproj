@@ -20,6 +20,7 @@
 		6B5F120624D27DE7009581AE /* TitleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F120524D27DE7009581AE /* TitleScene.swift */; };
 		6B5F120824D2A6C9009581AE /* bgm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6B5F120724D2A6C8009581AE /* bgm.mp3 */; };
 		6B5F120A24D2A916009581AE /* select.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6B5F120924D2A916009581AE /* select.mp3 */; };
+		6B5F12E424E42272009581AE /* Ranking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F12E324E42272009581AE /* Ranking.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		6B5F120524D27DE7009581AE /* TitleScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleScene.swift; sourceTree = "<group>"; };
 		6B5F120724D2A6C8009581AE /* bgm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bgm.mp3; path = ../../../../Downloads/bgm.mp3; sourceTree = "<group>"; };
 		6B5F120924D2A916009581AE /* select.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = select.mp3; path = ../../../../Downloads/select.mp3; sourceTree = "<group>"; };
+		6B5F12E324E42272009581AE /* Ranking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ranking.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 				6B5F120524D27DE7009581AE /* TitleScene.swift */,
 				14772E7324E2DBA6002021D5 /* MenuScene.swift */,
 				14772E7524E2E5E8002021D5 /* ResultScene.swift */,
+				6B5F12E324E42272009581AE /* Ranking.swift */,
 			);
 			path = DragonPuzzle;
 			sourceTree = "<group>";
@@ -166,6 +169,7 @@
 				6B5F11F424D15DDE009581AE /* GameScene.swift in Sources */,
 				14772E7624E2E5E8002021D5 /* ResultScene.swift in Sources */,
 				6B5F11F624D15DDE009581AE /* GameViewController.swift in Sources */,
+				6B5F12E424E42272009581AE /* Ranking.swift in Sources */,
 				14772E7424E2DBA6002021D5 /* MenuScene.swift in Sources */,
 				6B5F11EE24D15DDE009581AE /* AppDelegate.swift in Sources */,
 				6B5F120624D27DE7009581AE /* TitleScene.swift in Sources */,

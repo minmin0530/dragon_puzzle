@@ -555,6 +555,7 @@ class GameScene: SKScene {
             if time > 11 {
                 let scene = ResultScene(size: self.scene!.size)
                 scene.scaleMode = .aspectFill
+                scene.setPoint(point: point)
                 self.view!.presentScene(scene)
 
             }
