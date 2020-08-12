@@ -87,9 +87,9 @@ class GameScene: SKScene {
         else             { return SKTexture(imageNamed: "hexagon") }
     }
     func initElement(e: Element) {
-        e.colorNumber = Int.random(in: 0...4)
-        e.numberNumber = Int.random(in: 0...4)
-        e.shapeNumber = Int.random(in: 0...4)
+        e.colorNumber = Int.random(in: 0...2)
+        e.numberNumber = Int.random(in: 0...2)
+        e.shapeNumber = Int.random(in: 0...2)
         e.color = getColor(num: e.colorNumber!)
         e.numberTexture = getNumber(num: e.numberNumber!)
         e.shapeTexture = getShape(num: e.shapeNumber!)
@@ -181,9 +181,9 @@ class GameScene: SKScene {
         for x in -2...2 {
             let e = Element()
             
-            e.colorNumber = Int.random(in: 0...4)
-            e.numberNumber = Int.random(in: 0...4)
-            e.shapeNumber = Int.random(in: 0...4)
+            e.colorNumber = Int.random(in: 0...2)
+            e.numberNumber = Int.random(in: 0...2)
+            e.shapeNumber = Int.random(in: 0...2)
             e.color = getColor(num: e.colorNumber!)
             e.numberTexture = getNumber(num: e.numberNumber!)
             e.shapeTexture = getShape(num: e.shapeNumber!)
@@ -544,10 +544,10 @@ class GameScene: SKScene {
     var frameTime: Int = 0
     override func update(_ currentTime: TimeInterval) {
         if mode == Mode.free {
-            backgroundColor = UIColor.red
+            backgroundColor = UIColor.gray
         }
         if mode == Mode.timeAttack {
-            backgroundColor = UIColor.blue
+            backgroundColor = UIColor.gray
             
             if time > 10 {
                 gameFinish.isHidden = false
