@@ -13,6 +13,7 @@ enum Mode {
     case timeAttack
     case free
     case ranking
+    case stage
 }
 
 class MenuScene : SKScene {
@@ -51,9 +52,9 @@ class MenuScene : SKScene {
             }
             
             if self.atPoint(location).name == "timeAttackButton" {
-                let scene = GameScene(size: self.scene!.size)
+                let scene = StageScene(size: self.scene!.size)
                 scene.scaleMode = .aspectFill
-                scene.setMode(m: Mode.timeAttack)
+//                scene.setMode(m: Mode.timeAttack)
                 self.view!.presentScene(scene)
             }
 

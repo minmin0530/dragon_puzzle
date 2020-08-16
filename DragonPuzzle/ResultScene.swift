@@ -12,6 +12,8 @@ import GameplayKit
 class ResultScene : SKScene {
     var homeButton : SKLabelNode = SKLabelNode(text: "Home")
     var pointLabel : SKLabelNode = SKLabelNode()
+    
+    var dragon : [SKSpriteNode] = []
 
     override func didMove(to view: SKView) {
         homeButton.position.x = view.frame.width / 2
@@ -23,10 +25,29 @@ class ResultScene : SKScene {
         pointLabel.position.y = view.frame.height / 10 * 3
         pointLabel.name = "point"
         addChild(pointLabel)
+        
+        var x: CGFloat = -100
+        for d in dragon {
+            d.position.x = view.frame.width / 2 + x
+            d.position.y = view.frame.height / 2
+            x += 90.0
+        }
     }
 
     func setPoint(point: Int64) {
         pointLabel.text = "point:" + point.description
+    }
+    func setDragon(dragonNum: Int) {
+        for _ in 0...(dragonNum - 1) {
+            let d: SKSpriteNode = SKSpriteNode(imageNamed: "dragonRight")
+            d.xScale = 0.05
+            d.yScale = 0.05
+            addChild(d)
+            dragon.append( d )
+        }
+    }
+    func setBadge(badge: Int) {
+        
     }
 //    init(point : Int) {
 //        super.init()

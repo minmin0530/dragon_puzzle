@@ -36,6 +36,11 @@ class GameScene: SKScene {
     
     var dragonLeft: SKSpriteNode = SKSpriteNode(imageNamed: "dragonLeft")
     var dragonRight: SKSpriteNode = SKSpriteNode(imageNamed: "dragonRight")
+    
+    let DRAGON_LIFE: Int = 10
+    var dragonLife: Int?
+    var dragonNum: Int = 0
+    var dragonScale: CGFloat = 1.0
 
     var elements : [Element] = []
     var elementScale : CGFloat = 0.5
@@ -61,6 +66,11 @@ class GameScene: SKScene {
     var mode : Mode?
     func setMode(m : Mode) {
         mode = m
+    }
+    func setStageLevelTime(stage: Int, level: Int, time: Int) {
+        print(stage)
+        print(level)
+        print(time)
     }
     func getColor(num: Int) -> UIColor {
         if      num == 0 { return UIColor.red }
@@ -124,6 +134,23 @@ class GameScene: SKScene {
     }
     
     func addPoint(p: Int) {
+        dragonLife! -= p
+        if dragonLife! <= 0 {
+            dragonLife! = 0
+        }
+        print("life:" + dragonLife!.description)
+        let scale: CGFloat = dragonScale * CGFloat(dragonLife!) / 10.0
+        print(scale)
+        dragonRight.xScale = scale
+        dragonRight.yScale = scale
+        if dragonLife! <= 0 {
+            dragonNum += 1
+            dragonLife = DRAGON_LIFE
+            dragonRight.position.y = sceneHeightCenter * 2
+            dragonRight.xScale = dragonScale
+            dragonRight.yScale = dragonScale
+            dragonRight.zPosition = 10
+        }
         if p == 1 {
             point += 1
         } else if p == 2 {
@@ -238,6 +265,7 @@ class GameScene: SKScene {
         specialSpriteNumber?.color = UIColor.black
         addChild(specialSpriteNumber!)
 
+        dragonScale = elementScale * 0.4 * 0.606
         dragonLeft.xScale = elementScale * 0.4 * 0.606
         dragonLeft.yScale = elementScale * 0.4 * 0.606
         dragonRight.xScale = elementScale * 0.4 * 0.606
@@ -260,6 +288,7 @@ class GameScene: SKScene {
         gameFinish.isHidden = true
         addChild(gameFinish)
 
+        dragonLife = DRAGON_LIFE
     }
     
     
@@ -556,6 +585,7 @@ class GameScene: SKScene {
                 let scene = ResultScene(size: self.scene!.size)
                 scene.scaleMode = .aspectFill
                 scene.setPoint(point: point)
+                scene.setDragon(dragonNum: dragonNum)
                 self.view!.presentScene(scene)
 
             }
@@ -589,6 +619,13 @@ class GameScene: SKScene {
                 }
             
             }
+        }
+        
+        if dragonRight.zPosition == 10 {
+            dragonRight.position.y -= 4
+        }
+        if dragonRight.position.y <= sceneHeightCenter / 50 * 77 {
+            dragonRight.zPosition = 5
         }
     }
 }
