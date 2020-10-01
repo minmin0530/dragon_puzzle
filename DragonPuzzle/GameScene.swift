@@ -43,6 +43,7 @@ class GameScene: SKScene {
         SKSpriteNode(imageNamed: "dragon4"),
         SKSpriteNode(imageNamed: "dragon5")
     ]
+    var dragonWhite: SKSpriteNode = SKSpriteNode(imageNamed: "quad")
     let DRAGON_LIFE: Int = 10
     var dragonLife: Int?
     var dragonNum: Int = 0
@@ -284,11 +285,17 @@ class GameScene: SKScene {
         dragonRight[dragonNumber].position.x = view.frame.size.width / 100 * 32
         dragonLeft.position.y =  view.frame.size.height / 100 * 77
         dragonRight[dragonNumber].position.y = view.frame.size.height / 100 * 77
-        dragonLeft.zPosition = 3
-        dragonRight[dragonNumber].zPosition = 4
+        dragonLeft.zPosition = 6
+        dragonRight[dragonNumber].zPosition = 7
         addChild(dragonLeft)
         addChild(dragonRight[dragonNumber])
         
+        dragonWhite.xScale = elementScale * 3.34
+        dragonWhite.yScale = elementScale * 3.34
+        dragonWhite.position.x = view.frame.size.width / 100 * 32
+        dragonWhite.position.y = view.frame.size.height / 100 * 77
+        dragonWhite.zPosition = 5
+        addChild(dragonWhite)
         
         gameFinish.position.y = view.frame.height / 2
         gameFinish.position.x = view.frame.width / 2
@@ -313,27 +320,29 @@ class GameScene: SKScene {
     }
     
     func touchMoved(toPoint pos : CGPoint) {
-        for e in elements {
-            if e.shape!.position.x < pos.x + 30 &&
-                 e.shape!.position.x > pos.x - 30 &&
-             e.shape!.position.y < pos.y + 30 &&
-                e.shape!.position.y > pos.y - 30 {
-                e.shape?.xScale = 0.25
-                e.shape?.yScale = 0.25
-                e.number?.xScale = 0.25
-                e.number?.yScale = 0.25
-                e.select = true
-                
-                
-                        do {
-                            select = try AVAudioPlayer(contentsOf: selectSoundURL!)
-                //            player?.numberOfLoops = -1   // ループ再生する
-                            select?.prepareToPlay()      // 即時再生させる
-                            select?.play()               // BGMを鳴らす
-                        } catch {
-                            print("error...")
-                        }
+        if pos.y < CGFloat(elementScale * 1310) {
+            for e in elements {
+                if e.shape!.position.x < pos.x + 30 &&
+                     e.shape!.position.x > pos.x - 30 &&
+                 e.shape!.position.y < pos.y + 30 &&
+                    e.shape!.position.y > pos.y - 30 {
+                    e.shape?.xScale = 0.25
+                    e.shape?.yScale = 0.25
+                    e.number?.xScale = 0.25
+                    e.number?.yScale = 0.25
+                    e.select = true
+                    
+                    
+                    do {
+                        select = try AVAudioPlayer(contentsOf: selectSoundURL!)
+            //            player?.numberOfLoops = -1   // ループ再生する
+                        select?.prepareToPlay()      // 即時再生させる
+                        select?.play()               // BGMを鳴らす
+                    } catch {
+                        print("error...")
+                    }
 
+                }
             }
         }
 //        points[1] = pos
@@ -635,7 +644,8 @@ class GameScene: SKScene {
             dragonRight[dragonNumber].position.y -= 4
         }
         if dragonRight[dragonNumber].position.y <= sceneHeightCenter / 50 * 77 {
-            dragonRight[dragonNumber].zPosition = 5
+            dragonRight[dragonNumber].position.y = self.view!.frame.size.height / 100 * 77
+            dragonRight[dragonNumber].zPosition = 7
         }
     }
 }
