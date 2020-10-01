@@ -33,10 +33,16 @@ class GameScene: SKScene {
     
 //    private var label : SKLabelNode?
 //    private var spinnyNode : SKShapeNode?
-    
+    var levelNumber: Int = 2
+    var dragonNumber: Int = 0
     var dragonLeft: SKSpriteNode = SKSpriteNode(imageNamed: "dragonLeft")
-    var dragonRight: SKSpriteNode = SKSpriteNode(imageNamed: "dragonRight")
-    
+    var dragonRight: [SKSpriteNode] = [
+        SKSpriteNode(imageNamed: "dragonRight"),
+        SKSpriteNode(imageNamed: "dragon2"),
+        SKSpriteNode(imageNamed: "dragon3"),
+        SKSpriteNode(imageNamed: "dragon4"),
+        SKSpriteNode(imageNamed: "dragon5")
+    ]
     let DRAGON_LIFE: Int = 10
     var dragonLife: Int?
     var dragonNum: Int = 0
@@ -53,6 +59,7 @@ class GameScene: SKScene {
     var point : Int64 = 0
     var timeLabel : SKLabelNode = SKLabelNode(text: "time")
     var time : Int64 = 0
+    var timeLimit : Int64 = 0
     var specialShape : SKTexture?
     var specialNumber: SKTexture?
     var specialColor : UIColor?
@@ -67,10 +74,13 @@ class GameScene: SKScene {
     func setMode(m : Mode) {
         mode = m
     }
-    func setStageLevelTime(stage: Int, level: Int, time: Int) {
+    func setStageLevelTime(stage: Int, level: Int, time: Int64) {
         print(stage)
+        dragonNumber = stage
         print(level)
+        levelNumber = level
         print(time)
+        timeLimit = time
     }
     func getColor(num: Int) -> UIColor {
         if      num == 0 { return UIColor.red }
@@ -97,9 +107,9 @@ class GameScene: SKScene {
         else             { return SKTexture(imageNamed: "hexagon") }
     }
     func initElement(e: Element) {
-        e.colorNumber = Int.random(in: 0...2)
-        e.numberNumber = Int.random(in: 0...2)
-        e.shapeNumber = Int.random(in: 0...2)
+        e.colorNumber = Int.random(in: 0...levelNumber)
+        e.numberNumber = Int.random(in: 0...levelNumber)
+        e.shapeNumber = Int.random(in: 0...levelNumber)
         e.color = getColor(num: e.colorNumber!)
         e.numberTexture = getNumber(num: e.numberNumber!)
         e.shapeTexture = getShape(num: e.shapeNumber!)
@@ -141,15 +151,15 @@ class GameScene: SKScene {
         print("life:" + dragonLife!.description)
         let scale: CGFloat = dragonScale * CGFloat(dragonLife!) / 10.0
         print(scale)
-        dragonRight.xScale = scale
-        dragonRight.yScale = scale
+        dragonRight[dragonNumber].xScale = scale
+        dragonRight[dragonNumber].yScale = scale
         if dragonLife! <= 0 {
             dragonNum += 1
             dragonLife = DRAGON_LIFE
-            dragonRight.position.y = sceneHeightCenter * 2
-            dragonRight.xScale = dragonScale
-            dragonRight.yScale = dragonScale
-            dragonRight.zPosition = 10
+            dragonRight[dragonNumber].position.y = sceneHeightCenter * 2
+            dragonRight[dragonNumber].xScale = dragonScale
+            dragonRight[dragonNumber].yScale = dragonScale
+            dragonRight[dragonNumber].zPosition = 10
         }
         if p == 1 {
             point += 1
@@ -208,9 +218,9 @@ class GameScene: SKScene {
         for x in -2...2 {
             let e = Element()
             
-            e.colorNumber = Int.random(in: 0...2)
-            e.numberNumber = Int.random(in: 0...2)
-            e.shapeNumber = Int.random(in: 0...2)
+            e.colorNumber = Int.random(in: 0...levelNumber)
+            e.numberNumber = Int.random(in: 0...levelNumber)
+            e.shapeNumber = Int.random(in: 0...levelNumber)
             e.color = getColor(num: e.colorNumber!)
             e.numberTexture = getNumber(num: e.numberNumber!)
             e.shapeTexture = getShape(num: e.shapeNumber!)
@@ -268,16 +278,16 @@ class GameScene: SKScene {
         dragonScale = elementScale * 0.4 * 0.606
         dragonLeft.xScale = elementScale * 0.4 * 0.606
         dragonLeft.yScale = elementScale * 0.4 * 0.606
-        dragonRight.xScale = elementScale * 0.4 * 0.606
-        dragonRight.yScale = elementScale * 0.4 * 0.606
+        dragonRight[dragonNumber].xScale = elementScale * 0.4 * 0.606
+        dragonRight[dragonNumber].yScale = elementScale * 0.4 * 0.606
         dragonLeft.position.x = view.frame.size.width / 100 * 68
-        dragonRight.position.x = view.frame.size.width / 100 * 32
+        dragonRight[dragonNumber].position.x = view.frame.size.width / 100 * 32
         dragonLeft.position.y =  view.frame.size.height / 100 * 77
-        dragonRight.position.y = view.frame.size.height / 100 * 77
+        dragonRight[dragonNumber].position.y = view.frame.size.height / 100 * 77
         dragonLeft.zPosition = 3
-        dragonRight.zPosition = 4
+        dragonRight[dragonNumber].zPosition = 4
         addChild(dragonLeft)
-        addChild(dragonRight)
+        addChild(dragonRight[dragonNumber])
         
         
         gameFinish.position.y = view.frame.height / 2
@@ -578,10 +588,10 @@ class GameScene: SKScene {
         if mode == Mode.timeAttack {
             backgroundColor = UIColor.gray
             
-            if time > 10 {
+            if time > timeLimit {
                 gameFinish.isHidden = false
             }
-            if time > 11 {
+            if time > (timeLimit + 1) {
                 let scene = ResultScene(size: self.scene!.size)
                 scene.scaleMode = .aspectFill
                 scene.setPoint(point: point)
@@ -621,11 +631,11 @@ class GameScene: SKScene {
             }
         }
         
-        if dragonRight.zPosition == 10 {
-            dragonRight.position.y -= 4
+        if dragonRight[dragonNumber].zPosition == 10 {
+            dragonRight[dragonNumber].position.y -= 4
         }
-        if dragonRight.position.y <= sceneHeightCenter / 50 * 77 {
-            dragonRight.zPosition = 5
+        if dragonRight[dragonNumber].position.y <= sceneHeightCenter / 50 * 77 {
+            dragonRight[dragonNumber].zPosition = 5
         }
     }
 }

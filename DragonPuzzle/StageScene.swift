@@ -147,8 +147,8 @@ class StageScene : SKScene,UITableViewDelegate,UITableViewDataSource {
         scene.setMode(m: Mode.timeAttack)
         scene.setStageLevelTime(
             stage: indexPath.row % 15 % 5,
-            level: indexPath.row % 15 / 5,
-            time : indexPath.row / 15)
+            level: (indexPath.row % 15 / 5) + 2,
+            time : Int64((indexPath.row / 15) + 1) * 30 )
         self.view!.presentScene(scene)
     }
 
@@ -156,23 +156,23 @@ class StageScene : SKScene,UITableViewDelegate,UITableViewDataSource {
 
        //削除機能をち追加してみましょう！
 
-       func tableView(_ sampleTableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-
-           
-
-           let deleteButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "削除") { (action, index) -> Void in
-
-               self.stageArray.remove(at: indexPath.row)
-
-               sampleTableView.deleteRows(at: [indexPath], with: .fade)
-
-           }
-
-           deleteButton.backgroundColor = UIColor.red
-
-           
-
-           return [deleteButton]
-
-       }
+//       func tableView(_ sampleTableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+//
+//
+//
+//           let deleteButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "削除") { (action, index) -> Void in
+//
+//               self.stageArray.remove(at: indexPath.row)
+//
+//               sampleTableView.deleteRows(at: [indexPath], with: .fade)
+//
+//           }
+//
+//           deleteButton.backgroundColor = UIColor.red
+//
+//
+//
+//           return [deleteButton]
+//
+//       }
 }

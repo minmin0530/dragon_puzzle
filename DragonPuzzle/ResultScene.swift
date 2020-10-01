@@ -38,7 +38,7 @@ class ResultScene : SKScene {
         pointLabel.text = "point:" + point.description
     }
     func setDragon(dragonNum: Int) {
-        for _ in 0...(dragonNum - 1) {
+        for _ in 0..<(dragonNum) {
             let d: SKSpriteNode = SKSpriteNode(imageNamed: "dragonRight")
             d.xScale = 0.05
             d.yScale = 0.05
