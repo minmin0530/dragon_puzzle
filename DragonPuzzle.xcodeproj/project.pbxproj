@@ -18,9 +18,10 @@
 		6B5F11FB24D15DDF009581AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B5F11FA24D15DDF009581AE /* Assets.xcassets */; };
 		6B5F11FE24D15DDF009581AE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B5F11FC24D15DDF009581AE /* LaunchScreen.storyboard */; };
 		6B5F120624D27DE7009581AE /* TitleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F120524D27DE7009581AE /* TitleScene.swift */; };
-		6B5F120A24D2A916009581AE /* select.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6B5F120924D2A916009581AE /* select.mp3 */; };
 		6B5F12E424E42272009581AE /* RankingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F12E324E42272009581AE /* RankingScene.swift */; };
 		6B5F12E624E67A59009581AE /* StageScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F12E524E67A59009581AE /* StageScene.swift */; };
+		6B77F9EC256DDE26003C0E66 /* select.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6B77F9EA256DDE26003C0E66 /* select.mp3 */; };
+		6B77F9ED256DDE26003C0E66 /* bgm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6B77F9EB256DDE26003C0E66 /* bgm.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,9 +38,10 @@
 		6B5F11FD24D15DDF009581AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6B5F11FF24D15DDF009581AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B5F120524D27DE7009581AE /* TitleScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleScene.swift; sourceTree = "<group>"; };
-		6B5F120924D2A916009581AE /* select.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = select.mp3; path = ../../../../Downloads/select.mp3; sourceTree = "<group>"; };
 		6B5F12E324E42272009581AE /* RankingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingScene.swift; sourceTree = "<group>"; };
 		6B5F12E524E67A59009581AE /* StageScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageScene.swift; sourceTree = "<group>"; };
+		6B77F9EA256DDE26003C0E66 /* select.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = select.mp3; sourceTree = "<group>"; };
+		6B77F9EB256DDE26003C0E66 /* bgm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bgm.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +74,8 @@
 		6B5F11EC24D15DDE009581AE /* DragonPuzzle */ = {
 			isa = PBXGroup;
 			children = (
-				6B5F120924D2A916009581AE /* select.mp3 */,
+				6B77F9EB256DDE26003C0E66 /* bgm.mp3 */,
+				6B77F9EA256DDE26003C0E66 /* select.mp3 */,
 				6B5F11ED24D15DDE009581AE /* AppDelegate.swift */,
 				6B5F11EF24D15DDE009581AE /* GameScene.sks */,
 				6B5F11F124D15DDE009581AE /* Actions.sks */,
@@ -149,12 +152,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B77F9EC256DDE26003C0E66 /* select.mp3 in Resources */,
 				6B5F11F924D15DDE009581AE /* Main.storyboard in Resources */,
 				6B5F11F024D15DDE009581AE /* GameScene.sks in Resources */,
-				6B5F120A24D2A916009581AE /* select.mp3 in Resources */,
 				6B5F11FB24D15DDF009581AE /* Assets.xcassets in Resources */,
 				6B5F11FE24D15DDF009581AE /* LaunchScreen.storyboard in Resources */,
 				6B5F11F224D15DDE009581AE /* Actions.sks in Resources */,
+				6B77F9ED256DDE26003C0E66 /* bgm.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
