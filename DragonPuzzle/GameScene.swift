@@ -200,16 +200,16 @@ class GameScene: SKScene {
     let selectSoundURL = Bundle.main.url(forResource:"select", withExtension: "mp3")
     override func didMove(to view: SKView) {
         
-        let soundURL = Bundle.main.url(forResource:"bgm", withExtension: "mp3")
-        do {
-            player = try AVAudioPlayer(contentsOf: soundURL!)
-            player?.numberOfLoops = -1   // ループ再生する
-            player?.prepareToPlay()      // 即時再生させる
-            player?.play()               // BGMを鳴らす
-        } catch {
-            print("error...")
-        }
-
+//        let soundURL = Bundle.main.url(forResource:"bgm", withExtension: "mp3")
+//        do {
+//            player = try AVAudioPlayer(contentsOf: soundURL!)
+//            player?.numberOfLoops = -1   // ループ再生する
+//            player?.prepareToPlay()      // 即時再生させる
+//            player?.play()               // BGMを鳴らす
+//        } catch {
+//            print("error...")
+//        }
+//
 
         
         elementScale = view.frame.size.height / 2000.0
