@@ -306,7 +306,7 @@ class GameScene: SKScene {
         elementScale = view.frame.size.height / 2000.0
         sceneHeightCenter = view.frame.size.height / 3.0
         sceneWidthCenter = view.frame.size.width / 2.0
-        for y in -4...4 {
+        for y in -3...4 {
         for x in -2...3 {
             let e = Element()
             
@@ -726,7 +726,7 @@ class GameScene: SKScene {
         timeLabel.text = time.description + "/60"
 
         for e in elements {
-            if e.number!.position.y > (sceneHeightCenter - 600.0 * elementScale) {
+            if e.number!.position.y > (sceneHeightCenter - 450.0 * elementScale) {
                 var fallFlag = true
                 for e2 in elements {
                     if e !== e2 &&
