@@ -35,15 +35,43 @@ class GameScene: SKScene {
 //    private var spinnyNode : SKShapeNode?
     var levelNumber: Int = 2
     var dragonNumber: Int = 0
-    var dragonLeft: SKSpriteNode = SKSpriteNode(imageNamed: "dragonLeft")
-    var dragonRight: [SKSpriteNode] = [
-        SKSpriteNode(imageNamed: "dragonRight"),
-        SKSpriteNode(imageNamed: "dragon2"),
-        SKSpriteNode(imageNamed: "dragon3"),
-        SKSpriteNode(imageNamed: "dragon4"),
-        SKSpriteNode(imageNamed: "dragon5")
-    ]
-    var dragonWhite: SKSpriteNode = SKSpriteNode(imageNamed: "quad")
+    var background: SKSpriteNode = SKSpriteNode(imageNamed: "background")
+    var face: SKSpriteNode = SKSpriteNode(imageNamed: "face")
+    var whiteEyeLeft: SKSpriteNode = SKSpriteNode(imageNamed: "white_eye")
+    var whiteEyeRight: SKSpriteNode = SKSpriteNode(imageNamed: "white_eye")
+    var blackEyeLeft: SKSpriteNode = SKSpriteNode(imageNamed: "black_eye")
+    var blackEyeRight: SKSpriteNode = SKSpriteNode(imageNamed: "black_eye")
+    var nose: SKSpriteNode = SKSpriteNode(imageNamed: "nose")
+
+    var home: SKSpriteNode = SKSpriteNode(imageNamed: "home")
+    var watch: SKSpriteNode = SKSpriteNode(imageNamed: "watch")
+    var lifeFrame: SKSpriteNode = SKSpriteNode(imageNamed: "life_frame")
+    var life: SKSpriteNode = SKSpriteNode(imageNamed: "life")
+
+    
+    
+    var backgroundX: CGFloat = 0.0
+    var backgroundY: CGFloat = 0.0
+    var faceX: CGFloat = 0.0
+    var faceY: CGFloat = 0.0
+    var faceVerticalSpeed: CGFloat = 2.0
+    var faceHorizonSpeed: CGFloat = 2.0
+    var leftEyeVerticalSpeed: CGFloat = 0.9
+    var rightEyeVerticalSpeed: CGFloat = 0.7
+    var leftEyeHorizonSpeed: CGFloat = 1.3
+    var rightEyeHorizonSpeed: CGFloat = 1.7
+    var eyeHeight: CGFloat = 0.0
+    var leftEyeX: CGFloat = 0.0
+    var rightEyeX: CGFloat = 0.0
+//    var dragonLeft: SKSpriteNode = SKSpriteNode(imageNamed: "dragonLeft")
+//    var dragonRight: [SKSpriteNode] = [
+//        SKSpriteNode(imageNamed: "dragonRight"),
+//        SKSpriteNode(imageNamed: "dragon2"),
+//        SKSpriteNode(imageNamed: "dragon3"),
+//        SKSpriteNode(imageNamed: "dragon4"),
+//        SKSpriteNode(imageNamed: "dragon5")
+//    ]
+//    var dragonWhite: SKSpriteNode = SKSpriteNode(imageNamed: "quad")
     let DRAGON_LIFE: Int = 10
     var dragonLife: Int?
     var dragonNum: Int = 0
@@ -55,10 +83,11 @@ class GameScene: SKScene {
     var sceneWidthCenter : CGFloat = 300.0
     
     var gameFinish: SKSpriteNode = SKSpriteNode(imageNamed: "gamefinish")
-    
-    var pointLabel : SKLabelNode = SKLabelNode(text: "point")
+
+    var lifeLabel : SKLabelNode = SKLabelNode(text: "1800/1800")
+//    var pointLabel : SKLabelNode = SKLabelNode(text: "point")
     var point : Int64 = 0
-    var timeLabel : SKLabelNode = SKLabelNode(text: "time")
+    var timeLabel : SKLabelNode = SKLabelNode(text: "0/60")
     var time : Int64 = 0
     var timeLimit : Int64 = 0
     var specialShape : SKTexture?
@@ -86,9 +115,9 @@ class GameScene: SKScene {
     func getColor(num: Int) -> UIColor {
         if      num == 0 { return UIColor.red }
         else if num == 1 { return UIColor.green }
-        else if num == 2 { return UIColor.cyan }
+        else if num == 2 { return UIColor.white }
         else if num == 3 { return UIColor.yellow }
-        else             { return UIColor.white }
+        else             { return UIColor.cyan }
     }
     func getNumber(num: Int) -> SKTexture {
         
@@ -104,8 +133,8 @@ class GameScene: SKScene {
         else if num == 0 { return SKTexture(imageNamed: "circle") }
         else if num == 1 { return SKTexture(imageNamed: "heart") }
         else if num == 2 { return SKTexture(imageNamed: "quad") }
-        else if num == 3 { return SKTexture(imageNamed: "star") }
-        else             { return SKTexture(imageNamed: "hexagon") }
+        else if num == 3 { return SKTexture(imageNamed: "hexagon") }
+        else             { return SKTexture(imageNamed: "star") }
     }
     func initElement(e: Element) {
         e.colorNumber = Int.random(in: 0...levelNumber)
@@ -127,7 +156,7 @@ class GameScene: SKScene {
         e.number?.position.x = CGFloat(e.x!)
         e.number?.position.y = CGFloat( elementScale * 1500)
         e.shape?.position.x =  CGFloat(e.x!)
-        e.shape?.position.y =  CGFloat( elementScale * 1500)
+        e.shape?.position.y = CGFloat( elementScale * 1500)
         e.shape?.xScale = elementScale
         e.shape?.yScale = elementScale
         e.number?.xScale = elementScale
@@ -152,16 +181,16 @@ class GameScene: SKScene {
         print("life:" + dragonLife!.description)
         let scale: CGFloat = dragonScale * CGFloat(dragonLife!) / 10.0
         print(scale)
-        dragonRight[dragonNumber].xScale = scale
-        dragonRight[dragonNumber].yScale = scale
-        if dragonLife! <= 0 {
-            dragonNum += 1
-            dragonLife = DRAGON_LIFE
-            dragonRight[dragonNumber].position.y = sceneHeightCenter * 2
-            dragonRight[dragonNumber].xScale = dragonScale
-            dragonRight[dragonNumber].yScale = dragonScale
-            dragonRight[dragonNumber].zPosition = 10
-        }
+//        dragonRight[dragonNumber].xScale = scale
+//        dragonRight[dragonNumber].yScale = scale
+//        if dragonLife! <= 0 {
+//            dragonNum += 1
+//            dragonLife = DRAGON_LIFE
+//            dragonRight[dragonNumber].position.y = sceneHeightCenter * 2
+//            dragonRight[dragonNumber].xScale = dragonScale
+//            dragonRight[dragonNumber].yScale = dragonScale
+//            dragonRight[dragonNumber].zPosition = 10
+//        }
         if p == 1 {
             point += 1
         } else if p == 2 {
@@ -199,7 +228,69 @@ class GameScene: SKScene {
     var select: AVAudioPlayer?
     let selectSoundURL = Bundle.main.url(forResource:"select", withExtension: "mp3")
     override func didMove(to view: SKView) {
+        background.zPosition = -1
+        home.zPosition = 996
+        watch.zPosition = 996
+        timeLabel.zPosition = 996
+        lifeLabel.zPosition = 996
+        face.zPosition = 995
+        life.zPosition = 994
+        lifeFrame.zPosition = 993
+        whiteEyeLeft.zPosition = 996
+        whiteEyeRight.zPosition = 996
+        blackEyeLeft.zPosition = 997
+        blackEyeRight.zPosition = 997
+        nose.zPosition = 997
+
+        background.position.x += view.bounds.width / 2
+        background.position.y += view.bounds.height / 2
+        face.position.x += view.bounds.width / 2
+        face.position.y += view.bounds.height / 10 * 8
+        whiteEyeLeft.position.x += view.bounds.width / 2 - 55
+        whiteEyeRight.position.x += view.bounds.width / 2 + 55
+        whiteEyeLeft.position.y += view.bounds.height / 10 * 8
+        whiteEyeRight.position.y += view.bounds.height / 10 * 8
+        blackEyeLeft.position.x += view.bounds.width / 2 - 55
+        blackEyeRight.position.x += view.bounds.width / 2 + 55
+        blackEyeLeft.position.y += view.bounds.height / 10 * 8
+        blackEyeRight.position.y += view.bounds.height / 10 * 8
+        nose.position.x += view.bounds.width / 2
+        nose.position.y += view.bounds.height / 60 * 43
+        backgroundX = view.bounds.width / 2
+        backgroundY = view.bounds.height / 2
+        faceX = view.bounds.width / 2
+        faceY = view.bounds.height / 10 * 8
+        eyeHeight = view.bounds.height / 10 * 8
+        leftEyeX = view.bounds.width / 2 - 55
+        rightEyeX = view.bounds.width / 2 + 55
         
+        home.position.x += view.bounds.width / 10
+        home.position.y += view.bounds.height / 10 * 9
+        watch.position.x += view.bounds.width / 10 * 8
+        watch.position.y += view.bounds.height / 10 * 9
+        lifeFrame.position.x += view.bounds.width / 2
+        lifeFrame.position.y += view.bounds.height / 100 * 66
+        life.position.x += view.bounds.width / 2
+        life.position.y += view.bounds.height / 100 * 66
+        lifeLabel.position.x += view.bounds.width / 10 * 8
+        lifeLabel.position.y += view.bounds.height / 100 * 67
+        lifeLabel.fontName = "Arial Bold"
+        lifeLabel.fontSize = 26
+        lifeLabel.fontColor = .red
+
+        addChild(background)
+        addChild(face)
+        addChild(whiteEyeLeft)
+        addChild(whiteEyeRight)
+        addChild(blackEyeLeft)
+        addChild(blackEyeRight)
+        addChild(nose)
+        addChild(home)
+        addChild(watch)
+        addChild(lifeFrame)
+        addChild(life)
+        addChild(lifeLabel)
+
         let soundURL = Bundle.main.url(forResource:"bgm", withExtension: "mp3")
         do {
             player = try AVAudioPlayer(contentsOf: soundURL!)
@@ -213,10 +304,10 @@ class GameScene: SKScene {
 
         
         elementScale = view.frame.size.height / 2000.0
-        sceneHeightCenter = view.frame.size.height / 2.0
+        sceneHeightCenter = view.frame.size.height / 3.0
         sceneWidthCenter = view.frame.size.width / 2.0
-        for y in -3...4 {
-        for x in -2...2 {
+        for y in -4...4 {
+        for x in -2...3 {
             let e = Element()
             
             e.colorNumber = Int.random(in: 0...levelNumber)
@@ -235,10 +326,10 @@ class GameScene: SKScene {
                 e.number?.colorBlendFactor = 1.0
                 e.number?.color = UIColor.black
 //            }
-            e.x                  = CGFloat(CGFloat(x) * 150.0 * elementScale + sceneWidthCenter)
-            e.number?.position.x = CGFloat(CGFloat(x) * 150.0 * elementScale + sceneWidthCenter)
+            e.x                  = CGFloat(CGFloat(x) * 150.0 * elementScale + sceneWidthCenter - 75.0 * elementScale)
+            e.number?.position.x = CGFloat(CGFloat(x) * 150.0 * elementScale + sceneWidthCenter - 75.0 * elementScale)
             e.number?.position.y = CGFloat(CGFloat(y) * 150.0 * elementScale + sceneHeightCenter)
-            e.shape?.position.x =  CGFloat(CGFloat(x) * 150.0 * elementScale + sceneWidthCenter)
+            e.shape?.position.x =  CGFloat(CGFloat(x) * 150.0 * elementScale + sceneWidthCenter - 75.0 * elementScale)
             e.shape?.position.y =  CGFloat(CGFloat(y) * 150.0 * elementScale + sceneHeightCenter)
             e.shape?.xScale = elementScale
             e.shape?.yScale = elementScale
@@ -251,11 +342,13 @@ class GameScene: SKScene {
         }
         }
         
-        pointLabel.position.x = CGFloat(CGFloat(0) * 150.0 * elementScale + sceneWidthCenter)
-        pointLabel.position.y = CGFloat(CGFloat(-4) * 150.0 * elementScale + sceneHeightCenter)
-        addChild(pointLabel)
-        timeLabel.position.x = CGFloat(CGFloat(0) * 150.0 * elementScale + sceneWidthCenter)
-        timeLabel.position.y = CGFloat(CGFloat(-4.5) * 150.0 * elementScale + sceneHeightCenter)
+//        pointLabel.position.x = CGFloat(CGFloat(0) * 150.0 * elementScale + sceneWidthCenter)
+//        pointLabel.position.y = CGFloat(CGFloat(-4) * 150.0 * elementScale + sceneHeightCenter)
+//        addChild(pointLabel)
+        timeLabel.fontName = "Arial Bold"
+        timeLabel.fontSize = 26
+        timeLabel.position.x += view.bounds.width / 10 * 8 + 46
+        timeLabel.position.y += view.bounds.height / 10 * 9 - 10
         addChild(timeLabel)
         
         specialSpriteShape = SKSpriteNode(texture: getShape(num: -1))
@@ -276,26 +369,26 @@ class GameScene: SKScene {
         specialSpriteNumber?.color = UIColor.black
         addChild(specialSpriteNumber!)
 
-        dragonScale = elementScale * 0.4 * 0.606
-        dragonLeft.xScale = elementScale * 0.4 * 0.606
-        dragonLeft.yScale = elementScale * 0.4 * 0.606
-        dragonRight[dragonNumber].xScale = elementScale * 0.4 * 0.606
-        dragonRight[dragonNumber].yScale = elementScale * 0.4 * 0.606
-        dragonLeft.position.x = view.frame.size.width / 100 * 68
-        dragonRight[dragonNumber].position.x = view.frame.size.width / 100 * 32
-        dragonLeft.position.y =  view.frame.size.height / 100 * 77
-        dragonRight[dragonNumber].position.y = view.frame.size.height / 100 * 77
-        dragonLeft.zPosition = 6
-        dragonRight[dragonNumber].zPosition = 7
-        addChild(dragonLeft)
-        addChild(dragonRight[dragonNumber])
-        
-        dragonWhite.xScale = elementScale * 3.34
-        dragonWhite.yScale = elementScale * 3.34
-        dragonWhite.position.x = view.frame.size.width / 100 * 32
-        dragonWhite.position.y = view.frame.size.height / 100 * 77
-        dragonWhite.zPosition = 5
-        addChild(dragonWhite)
+//        dragonScale = elementScale * 0.4 * 0.606
+//        dragonLeft.xScale = elementScale * 0.4 * 0.606
+//        dragonLeft.yScale = elementScale * 0.4 * 0.606
+//        dragonRight[dragonNumber].xScale = elementScale * 0.4 * 0.606
+//        dragonRight[dragonNumber].yScale = elementScale * 0.4 * 0.606
+//        dragonLeft.position.x = view.frame.size.width / 100 * 68
+//        dragonRight[dragonNumber].position.x = view.frame.size.width / 100 * 32
+//        dragonLeft.position.y =  view.frame.size.height / 100 * 77
+//        dragonRight[dragonNumber].position.y = view.frame.size.height / 100 * 77
+//        dragonLeft.zPosition = 6
+//        dragonRight[dragonNumber].zPosition = 7
+//        addChild(dragonLeft)
+//        addChild(dragonRight[dragonNumber])
+//
+//        dragonWhite.xScale = elementScale * 3.34
+//        dragonWhite.yScale = elementScale * 3.34
+//        dragonWhite.position.x = view.frame.size.width / 100 * 32
+//        dragonWhite.position.y = view.frame.size.height / 100 * 77
+//        dragonWhite.zPosition = 5
+//        addChild(dragonWhite)
         
         gameFinish.position.y = view.frame.height / 2
         gameFinish.position.x = view.frame.width / 2
@@ -357,6 +450,7 @@ class GameScene: SKScene {
 //        }
     }
     
+    var atackTime = 0
     func touchUp(atPoint pos : CGPoint) {
         var c: Int = -1
         var s: Int = -1
@@ -478,6 +572,7 @@ class GameScene: SKScene {
         }
         if count1 > 0 {
             addPoint(p: count1)
+            atackTime = count1
         }
 ///////////////////////////////////////////
         i = -1
@@ -517,6 +612,7 @@ class GameScene: SKScene {
         }
         if count2 > 0 {
             addPoint(p: count2)
+            atackTime = count2
         }
 //////////////////////////////////////////
         i = -1
@@ -556,10 +652,11 @@ class GameScene: SKScene {
         }
         if count3 > 0 {
             addPoint(p: count3)
+            atackTime = count3
         }
 //////////////////////////////////////////
 
-        pointLabel.text = "point:" + point.description
+//        pointLabel.text = "point:" + point.description
         
         for e in elements {
             if e.select {
@@ -588,14 +685,15 @@ class GameScene: SKScene {
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
     
-    
+    var gameClearWaitTime = 0
     var frameTime: Int = 0
+    var animationTime: Int = 61
     override func update(_ currentTime: TimeInterval) {
         if mode == Mode.free {
-            backgroundColor = UIColor.gray
+            backgroundColor = UIColor.black
         }
         if mode == Mode.timeAttack {
-            backgroundColor = UIColor.gray
+            backgroundColor = UIColor.black
             
             if time > timeLimit {
                 gameFinish.isHidden = false
@@ -610,17 +708,25 @@ class GameScene: SKScene {
             }
         }
         if mode == Mode.collectBadge {
-            backgroundColor = UIColor.green
+            backgroundColor = UIColor.black
         }
         frameTime += 1
-        if frameTime >= 100 {
+        animationTime += 1
+        if frameTime >= 50 {
+            if !gameFinish.isHidden && gameClearWaitTime > 49 {
+                let scene = ResultScene(size: self.scene!.size)
+                scene.scaleMode = .aspectFill
+                scene.setPoint(point: point)
+                scene.setDragon(dragonNum: dragonNum)
+                self.view!.presentScene(scene)
+            }
             frameTime = 0
             time += 1
         }
-        timeLabel.text = "time:" + time.description
+        timeLabel.text = time.description + "/60"
 
         for e in elements {
-            if e.number!.position.y > (sceneHeightCenter - 450.0 * elementScale) {
+            if e.number!.position.y > (sceneHeightCenter - 600.0 * elementScale) {
                 var fallFlag = true
                 for e2 in elements {
                     if e !== e2 &&
@@ -633,6 +739,10 @@ class GameScene: SKScene {
                 
 
                 if fallFlag {
+                    if frameTime > 11 {
+                        animationTime = 0
+//                        atackTime = 0
+                    }
                     e.number?.position.y -= 4
                     e.shape?.position.y -= 4
                 }
@@ -640,12 +750,64 @@ class GameScene: SKScene {
             }
         }
         
-        if dragonRight[dragonNumber].zPosition == 10 {
-            dragonRight[dragonNumber].position.y -= 4
-        }
-        if dragonRight[dragonNumber].position.y <= sceneHeightCenter / 50 * 77 {
-            dragonRight[dragonNumber].position.y = self.view!.frame.size.height / 100 * 77
-            dragonRight[dragonNumber].zPosition = 7
+        if animationTime < 30 * atackTime {
+
+            if blackEyeRight.position.x - whiteEyeRight.position.x > 20 ||  blackEyeRight.position.x - whiteEyeRight.position.x < -20 {
+                rightEyeHorizonSpeed *= -1
+            }
+            if blackEyeLeft.position.x - whiteEyeLeft.position.x > 20 ||  blackEyeLeft.position.x - whiteEyeLeft.position.x < -20 {
+                leftEyeHorizonSpeed *= -1
+            }
+            blackEyeLeft.position.x += leftEyeHorizonSpeed + faceHorizonSpeed
+            blackEyeRight.position.x += rightEyeHorizonSpeed + faceHorizonSpeed
+
+            if blackEyeRight.position.y > eyeHeight + 20 ||  blackEyeRight.position.y < eyeHeight - 20 {
+                rightEyeVerticalSpeed *= -1
+            }
+            if blackEyeLeft.position.y > eyeHeight + 20 ||  blackEyeLeft.position.y < eyeHeight - 20 {
+                leftEyeVerticalSpeed *= -1
+            }
+            blackEyeLeft.position.y += leftEyeVerticalSpeed
+            blackEyeRight.position.y += rightEyeVerticalSpeed
+
+            if face.position.x > faceX + 10 || face.position.x < faceX - 10 {
+                faceHorizonSpeed *= -1
+            }
+            if face.position.y > faceY + 20 || face.position.y < faceY - 20 {
+                faceVerticalSpeed *= -1
+            }
+            face.position.x += faceHorizonSpeed
+            face.position.y += faceVerticalSpeed
+            whiteEyeLeft.position.x += faceHorizonSpeed
+            whiteEyeRight.position.x += faceHorizonSpeed
+            whiteEyeLeft.position.y += faceVerticalSpeed
+            whiteEyeRight.position.y += faceVerticalSpeed
+            nose.position.x += faceHorizonSpeed
+            nose.position.y += faceVerticalSpeed
+
+
+            life.xScale -= 1.0 / 1800.0
+            face.colorBlendFactor = 1.0
+            face.color = UIColor.init(red: 1.0, green: 1.0, blue: 0.0, alpha: life.xScale)
+
+            if life.xScale <= 0.0 {
+                life.xScale = 0.0
+                life.isHidden = true
+                gameFinish.isHidden = false
+                gameClearWaitTime += 1
+            }
+            lifeLabel.text = Int(life.xScale * 1800).description + "/1800"
+            background.position.x += CGFloat.random(in: -20...20)
+            background.position.y += CGFloat.random(in: -20...20)
+
+        } else {
+            blackEyeLeft.position.x = whiteEyeLeft.position.x
+            blackEyeRight.position.x = whiteEyeRight.position.x
+            blackEyeLeft.position.y = whiteEyeLeft.position.y
+            blackEyeRight.position.y = whiteEyeRight.position.y
+
+            background.position.x = backgroundX
+            background.position.y = backgroundY
         }
     }
 }
