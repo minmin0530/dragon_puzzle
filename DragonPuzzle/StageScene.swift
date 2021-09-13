@@ -18,9 +18,9 @@ class StageScene : SKScene,UITableViewDelegate,UITableViewDataSource {
 //    var rankingButton : SKLabelNode = SKLabelNode(text: "Ranking")
 
     override func didMove(to view: SKView) {
-        for time in 1...3 {
-            for level in 1...3 {
-                for stage in 1...5 {
+        for time in 1...1 {
+            for level in 3...3 {
+                for stage in 1...1 {
                     stageArray.append("stage" + stage.description + "  level" + level.description + "  time" + time.description + "minutes")
                 }
             }
@@ -146,9 +146,9 @@ class StageScene : SKScene,UITableViewDelegate,UITableViewDataSource {
         scene.scaleMode = .aspectFill
         scene.setMode(m: Mode.timeAttack)
         scene.setStageLevelTime(
-            stage: indexPath.row % 15 % 5,
-            level: (indexPath.row % 15 / 5) + 2,
-            time : Int64((indexPath.row / 15) + 1) * 30 )
+            stage: 1,
+            level: 3,//(indexPath.row % 15 / 5) + 2,
+            time : 60 )
         self.view!.presentScene(scene)
     }
 

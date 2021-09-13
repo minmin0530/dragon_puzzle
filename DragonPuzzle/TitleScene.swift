@@ -29,7 +29,7 @@ class TitleScene : SKScene {
         dragon.yScale = 0.4 * 0.606
         addChild(dragon)
         
-        
+        startButton.fontName = "Arial Bold"
         startButton.position.x = view.frame.width / 2
         startButton.position.y = view.frame.height / 10
         startButton.colorBlendFactor = 1.0
